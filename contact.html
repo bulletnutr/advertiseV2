@@ -19,7 +19,6 @@
       100%{background-position:0% 50%}
     }
 
-    /* --- Header / Navigation --- */
     header {
       display:flex;
       justify-content: space-between;
@@ -45,7 +44,29 @@
     }
     nav a:hover { opacity:0.8; }
 
-    /* --- Main content --- */
+    /* 🌍 Language switcher small button style */
+    #lang-switcher {
+      margin-left:20px;
+      padding:6px 10px;
+      border-radius:20px;
+      border:1px solid #fff;
+      background: rgba(255,255,255,0.15);
+      color:#fff;               /* button text color */
+      font-size:14px;
+      cursor:pointer;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      width:auto;
+    }
+    #lang-switcher:hover {
+      background: rgba(255,255,255,0.25);
+    }
+    #lang-switcher option {
+      background:#fff;  /* dropdown background */
+      color:#000;       /* dropdown text color */
+    }
+
     .page-wrap {
       max-width: 800px;
       margin: 60px auto;
@@ -108,7 +129,6 @@
       text-align:center;
     }
 
-    /* Footer */
     footer {
       text-align:center;
       color:#fff;
@@ -120,11 +140,11 @@
     @media (max-width:600px){
       header { flex-direction: column; text-align:center; gap:10px; }
       nav a { margin-left:0; margin-right:10px; }
+      #lang-switcher { margin:10px auto; }
     }
   </style>
 </head>
 <body>
-  <!-- 🌍 Site Header with navigation -->
   <header>
     <h1 id="main-title">Lost Fund Assistance</h1>
     <nav>
@@ -132,6 +152,13 @@
       <a href="about.html" id="nav-about">About Us</a>
       <a href="contact.html" id="nav-contact">Contact</a>
     </nav>
+    <select id="lang-switcher">
+      <option value="en">EN</option>
+      <option value="fr">FR</option>
+      <option value="de">DE</option>
+      <option value="it">IT</option>
+      <option value="es">ES</option>
+    </select>
   </header>
 
   <div class="page-wrap">
@@ -168,9 +195,45 @@
   </footer>
 
   <script>
+    const translations = {
+      en: { headerTitle:"Lost Fund Assistance", formTitle:"Contact Us", fullName:"Full Name", email:"Email Address", phone:"Phone Number", amount:"Amount Lost", submit:"Submit Request", success:"✅ Thank you! We’ll contact you shortly.", navHome:"Home", navAbout:"About Us", navContact:"Contact" },
+      fr: { headerTitle:"Assistance Fonds Perdus", formTitle:"Contactez-nous", fullName:"Nom complet", email:"Adresse e-mail", phone:"Numéro de téléphone", amount:"Montant perdu", submit:"Soumettre la demande", success:"✅ Merci ! Nous vous contacterons bientôt.", navHome:"Accueil", navAbout:"À propos", navContact:"Contact" },
+      de: { headerTitle:"Hilfe bei verlorenen Geldern", formTitle:"Kontaktieren Sie uns", fullName:"Vollständiger Name", email:"E-Mail-Adresse", phone:"Telefonnummer", amount:"Verlorener Betrag", submit:"Anfrage senden", success:"✅ Danke! Wir werden Sie bald kontaktieren.", navHome:"Startseite", navAbout:"Über uns", navContact:"Kontakt" },
+      it: { headerTitle:"Assistenza Fondi Persi", formTitle:"Contattaci", fullName:"Nome completo", email:"Indirizzo email", phone:"Numero di telefono", amount:"Importo perso", submit:"Invia richiesta", success:"✅ Grazie! Ti contatteremo a breve.", navHome:"Home", navAbout:"Chi siamo", navContact:"Contatto" },
+      es: { headerTitle:"Asistencia de Fondos Perdidos", formTitle:"Contáctanos", fullName:"Nombre completo", email:"Correo electrónico", phone:"Número de teléfono", amount:"Cantidad perdida", submit:"Enviar solicitud", success:"✅ ¡Gracias! Nos pondremos en contacto contigo pronto.", navHome:"Inicio", navAbout:"Acerca de", navContact:"Contacto" }
+    };
+
+    function applyTranslations(lang) {
+      const content = translations[lang] || translations["en"];
+      document.getElementById("main-title").textContent = content.headerTitle;
+      document.getElementById("form-title").textContent = content.formTitle;
+      document.getElementById("label-fullname").textContent = content.fullName;
+      document.getElementById("label-email").textContent = content.email;
+      document.getElementById("label-phone").textContent = content.phone;
+      document.getElementById("label-amount").textContent = content.amount;
+      document.getElementById("btn-submit").textContent = content.submit;
+      document.getElementById("success-message").textContent = content.success;
+      document.getElementById("nav-home").textContent = content.navHome;
+      document.getElementById("nav-about").textContent = content.navAbout;
+      document.getElementById("nav-contact").textContent = content.navContact;
+
+      document.getElementById("lang-switcher").value = lang;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let userLang = urlParams.get("lang") || (navigator.language || navigator.userLanguage).split('-')[0];
+    if (!translations[userLang]) userLang = "en";
+    applyTranslations(userLang);
+
+    document.getElementById("lang-switcher").addEventListener("change", (e) => {
+      const chosen = e.target.value;
+      applyTranslations(chosen);
+      const newUrl = window.location.pathname + "?lang=" + chosen;
+      window.history.replaceState(null, "", newUrl);
+    });
+
     const form = document.getElementById('contact-form');
     const successMessage = document.getElementById('success-message');
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
@@ -190,95 +253,6 @@
         alert('⚠️ Error! Please try again later.');
       }
     });
-
-    // 🌍 Auto-language translation
-    const translations = {
-      en: {
-        headerTitle: "Lost Fund Assistance",
-        headerSubtitle: "We’re here to help you recover your funds with trust and professionalism.",
-        formTitle: "Contact Us",
-        fullName: "Full Name",
-        email: "Email Address",
-        phone: "Phone Number",
-        amount: "Amount Lost",
-        submit: "Submit Request",
-        success: "✅ Thank you! We’ll contact you shortly.",
-        navHome: "Home",
-        navAbout: "About Us",
-        navContact: "Contact"
-      },
-      fr: {
-        headerTitle: "Assistance Fonds Perdus",
-        headerSubtitle: "Nous sommes là pour vous aider à récupérer vos fonds avec confiance et professionnalisme.",
-        formTitle: "Contactez-nous",
-        fullName: "Nom complet",
-        email: "Adresse e-mail",
-        phone: "Numéro de téléphone",
-        amount: "Montant perdu",
-        submit: "Soumettre la demande",
-        success: "✅ Merci ! Nous vous contacterons bientôt.",
-        navHome: "Accueil",
-        navAbout: "À propos",
-        navContact: "Contact"
-      },
-      de: {
-        headerTitle: "Hilfe bei verlorenen Geldern",
-        headerSubtitle: "Wir helfen Ihnen, Ihre Gelder mit Vertrauen und Professionalität zurückzubekommen.",
-        formTitle: "Kontaktieren Sie uns",
-        fullName: "Vollständiger Name",
-        email: "E-Mail-Adresse",
-        phone: "Telefonnummer",
-        amount: "Verlorener Betrag",
-        submit: "Anfrage senden",
-        success: "✅ Danke! Wir werden Sie bald kontaktieren.",
-        navHome: "Startseite",
-        navAbout: "Über uns",
-        navContact: "Kontakt"
-      },
-      it: {
-        headerTitle: "Assistenza Fondi Persi",
-        headerSubtitle: "Siamo qui per aiutarti a recuperare i tuoi fondi con fiducia e professionalità.",
-        formTitle: "Contattaci",
-        fullName: "Nome completo",
-        email: "Indirizzo email",
-        phone: "Numero di telefono",
-        amount: "Importo perso",
-        submit: "Invia richiesta",
-        success: "✅ Grazie! Ti contatteremo a breve.",
-        navHome: "Home",
-        navAbout: "Chi siamo",
-        navContact: "Contatto"
-      },
-      es: {
-        headerTitle: "Asistencia de Fondos Perdidos",
-        headerSubtitle: "Estamos aquí para ayudarte a recuperar tus fondos con confianza y profesionalismo.",
-        formTitle: "Contáctanos",
-        fullName: "Nombre completo",
-        email: "Correo electrónico",
-        phone: "Número de teléfono",
-        amount: "Cantidad perdida",
-        submit: "Enviar solicitud",
-        success: "✅ ¡Gracias! Nos pondremos en contacto contigo pronto.",
-        navHome: "Inicio",
-        navAbout: "Acerca de",
-        navContact: "Contacto"
-      }
-    };
-
-    const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
-    const content = translations[userLang] || translations["en"];
-
-    document.getElementById("main-title").textContent = content.headerTitle;
-    document.getElementById("form-title").textContent = content.formTitle;
-    document.getElementById("label-fullname").textContent = content.fullName;
-    document.getElementById("label-email").textContent = content.email;
-    document.getElementById("label-phone").textContent = content.phone;
-    document.getElementById("label-amount").textContent = content.amount;
-    document.getElementById("btn-submit").textContent = content.submit;
-    document.getElementById("success-message").textContent = content.success;
-    document.getElementById("nav-home").textContent = content.navHome;
-    document.getElementById("nav-about").textContent = content.navAbout;
-    document.getElementById("nav-contact").textContent = content.navContact;
   </script>
 </body>
 </html>
