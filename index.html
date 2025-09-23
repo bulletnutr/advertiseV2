@@ -26,11 +26,49 @@
     header h1 {margin:0; font-size:28px;}
     nav a {color:#fff; text-decoration:none; margin-left:20px; font-weight:600;}
     nav a:hover{opacity:0.8;}
+
+    /* Hero */
     .hero {
       text-align:center; padding:120px 20px;
+      background: rgba(0,0,0,0.35); margin-bottom:40px;
     }
-    .hero h2 {font-size:40px; margin-bottom:20px;}
-    .hero p {font-size:20px; max-width:700px; margin:0 auto;}
+    .hero h2 {font-size:44px; margin-bottom:20px;}
+    .hero p {font-size:20px; max-width:700px; margin:0 auto 30px;}
+    .hero a {
+      display:inline-block; padding:14px 28px; font-size:18px;
+      background: linear-gradient(90deg,#4facfe,#43e97b);
+      color:#fff; text-decoration:none; border-radius:8px;
+      font-weight:600; transition:0.3s;
+    }
+    .hero a:hover {opacity:0.9;}
+
+    /* 3 Columns Info */
+    .info-section {
+      display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap:20px; max-width:1100px; margin:0 auto; padding:40px 20px;
+    }
+    .info-box {
+      background: rgba(0,0,0,0.35); padding:30px; border-radius:14px;
+      text-align:center; transition: transform 0.3s;
+    }
+    .info-box:hover {transform: translateY(-5px);}
+    .info-box h3 {margin-bottom:15px; font-size:22px;}
+    .info-box p {font-size:16px; line-height:1.5;}
+
+    /* CTA Section */
+    .cta {
+      text-align:center; padding:60px 20px; margin:40px 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .cta h2 {font-size:32px; margin-bottom:20px;}
+    .cta a {
+      display:inline-block; padding:14px 28px; font-size:18px;
+      background: linear-gradient(90deg,#ff6ec4,#43e97b);
+      color:#fff; text-decoration:none; border-radius:8px;
+      font-weight:600; transition:0.3s;
+    }
+    .cta a:hover {opacity:0.9;}
+
     footer {
       text-align:center; color:#fff; margin-top:60px; padding:20px;
       background: rgba(0,0,0,0.25); font-size:14px; opacity:0.9;
@@ -47,10 +85,37 @@
     </nav>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <h2>Ihre Hoffnung auf Rückerstattung beginnt hier</h2>
-    <p>Wir sind ein Team professioneller Berater, das sich darauf spezialisiert hat, Menschen zu helfen, die ihre Gelder durch Online-Betrug oder irreführende Investitionen verloren haben.  
-    Mit Vertrauen, Erfahrung und Engagement stehen wir an Ihrer Seite, um die bestmögliche Lösung zu finden.</p>
+    <p>Wir helfen Menschen in ganz Europa, die Opfer von Online-Betrug oder unseriösen Investitionen geworden sind.  
+    Mit Erfahrung, Transparenz und Engagement kämpfen wir für Ihr Recht auf Rückerstattung.</p>
+    <a href="contact.html">Jetzt Kontakt aufnehmen</a>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section">
+    <div class="info-box">
+      <h3>Vertrauen</h3>
+      <p>Unsere Mandanten stehen bei uns im Mittelpunkt.  
+      Wir behandeln jede Anfrage mit absoluter Diskretion und Integrität.</p>
+    </div>
+    <div class="info-box">
+      <h3>Erfahrung</h3>
+      <p>Mit einem internationalen Netzwerk und langjähriger Expertise  
+      kennen wir die besten Strategien, um verlorene Gelder zurückzuführen.</p>
+    </div>
+    <div class="info-box">
+      <h3>Erfolg</h3>
+      <p>Wir haben bereits zahlreichen Menschen geholfen, einen Teil ihrer Investitionen zurückzugewinnen.  
+      Jeder Fall ist einzigartig – wir geben immer unser Bestes.</p>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>Beginnen Sie Ihre Rückforderung noch heute</h2>
+    <a href="contact.html">Kostenlose Anfrage starten</a>
   </section>
 
   <footer>
